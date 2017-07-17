@@ -42,8 +42,9 @@ write_files:
           --container-runtime=docker \
           --register-node=true \
           --allow-privileged=true \
+          --cloud-provider=external \
+          --node-ip=$private_ipv4 \
           --pod-manifest-path=/etc/kubernetes/manifests \
-          --hostname-override=$private_ipv4 \
           --cluster-dns=${DNS_SERVICE_IP} \
           --cluster-domain=cluster.local \
           --kubeconfig=/etc/kubernetes/worker-kubeconfig.yaml \
