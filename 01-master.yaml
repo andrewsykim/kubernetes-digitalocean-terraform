@@ -38,6 +38,7 @@ write_files:
           --client-ca-file=/etc/kubernetes/ssl/ca.pem \
           --api-servers=http://127.0.0.1:8080 \
           --network-plugin-dir=/etc/kubernetes/cni/net.d \
+          --register-schedulable=false \
           --cloud-provider=external \
           --node-ip=$private_ipv4 \
           --container-runtime=docker \
