@@ -23,7 +23,7 @@ variable "ssh_private_key" {
 
 variable "number_of_workers" {}
 variable "hyperkube_version" {
-    default = "v1.5.4_coreos.0"
+    default = "v1.7.3_coreos.0"
 }
 
 variable "prefix" {
@@ -35,7 +35,7 @@ variable "size_etcd" {
 }
 
 variable "size_master" {
-    default = "512mb"
+    default = "1gb"
 }
 
 variable "size_worker" {
@@ -432,6 +432,19 @@ resource "null_resource" "deploy_microbot" {
             until kubectl get pods 2>/dev/null; do printf '.'; sleep 5; done
             kubectl create -f ./secrets/04-microbot.rendered.yaml
 
+EOF
+    }
+}
+
+resource "null_resource" "deploy_digitalocean_cloud_controller_manager" {
+    depends_on = ["null_resource.setup_kubectl"]
+    provisioner "local-exec" {
+        command = <<EOF
+            TOKEN=$(echo "${var.do_token}" | tr -d '\n' | base64)
+            sed -e "s/\$DO_ACCESS_TOKEN_BASE64/$TOKEN/" < ${path.module}/05-do-secret.yaml > ./secrets/05-do-secret.rendered.yaml
+            until kubectl get pods 2>/dev/null; do printf '.'; sleep 5; done
+            kubectl create -f ./secrets/05-do-secret.rendered.yaml
+            kubectl create -f https://raw.githubusercontent.com/digitalocean/digitalocean-cloud-controller-manager/master/releases/v0.1.0.yml
 EOF
     }
 }
