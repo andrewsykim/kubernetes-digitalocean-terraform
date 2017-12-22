@@ -38,8 +38,8 @@ write_files:
           --client-ca-file=/etc/kubernetes/ssl/ca.pem \
           --kubeconfig=/etc/kubernetes/kubelet-kubeconfig.yaml \
           --require-kubeconfig \
-          --network-plugin-dir=/etc/kubernetes/cni/net.d \
           --cloud-provider=external \
+          --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --container-runtime=docker \
           --allow-privileged=true \
           --pod-manifest-path=/etc/kubernetes/manifests \

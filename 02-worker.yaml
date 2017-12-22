@@ -37,8 +37,7 @@ write_files:
         ExecStart=/usr/lib/coreos/kubelet-wrapper \
           --anonymous-auth=false \
           --client-ca-file=/etc/kubernetes/ssl/ca.pem \
-          --require-kubeconfig \
-          --network-plugin-dir=/etc/kubernetes/cni/net.d \
+          --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --container-runtime=docker \
           --register-node=true \
           --allow-privileged=true \
